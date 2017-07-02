@@ -3,7 +3,6 @@
 #include "ObjectPool.h"
 #include "TimeUtil.h"
 #include <iostream>
-#include <boost/lexical_cast.hpp>
 
 class ProcessEngineTest : public ProcessEngine<ProcessEngineTest>
 {
@@ -63,9 +62,9 @@ void MyTestObjectPool() {
 
 int main(int argc, char *argv[])
 {
-    // MyTestObjectPool();
-    // TestProcessEngine();
-    /*
+    MyTestObjectPool();
+    TestProcessEngine();
+
     profiletime startTime = TimeUtil::GetProfileTime();
     std::chrono::high_resolution_clock::duration dur = startTime.time_since_epoch();
     int64 secs = std::chrono::duration_cast<std::chrono::seconds>(dur).count();
@@ -76,15 +75,6 @@ int main(int argc, char *argv[])
     std::cout << "msecs" << milliSecs << std::endl;
 
     std::cout << "log time " << TimeUtil::GetLogTime() << std::endl;
-    */
-
-    std::string str = "12234x";
-    try {
-        std::cout << boost::lexical_cast<int>(str) << std::endl;
-    }
-    catch(const boost::bad_lexical_cast& e ) {
-        std::cout << e.what() << std::endl;
-    }
 
     return 0;
 }

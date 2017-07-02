@@ -5,6 +5,7 @@
 #include <ctime>
 #include <iomanip>
 #include <stdio.h>
+#include <time.h>
 #include "Datatypes.h"
 
 typedef std::chrono::high_resolution_clock::time_point profiletime;
@@ -55,7 +56,7 @@ std::string TimeUtil::GetCurrentDateTime(const std::string& strFormat)
     std::time_t epochTime = std::time(nullptr);
     struct tm   timeInfo;
     char        timeString[64] = {0};
-    if(0 == ::localtime_s(&timeInfo, &epochTime)) {
+    if(0 == ::localtime_r(&epochTime, &timeInfo)) {
         std::strftime(timeString, sizeof(timeString), strFormat.c_str(), &timeInfo);
     }
     return timeString;
@@ -68,12 +69,12 @@ std::string TimeUtil::GetLogTime()
     int64 nMilliSecs = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
     struct tm   timeInfo;
     char timeString[32] = {'\0'};
-    if (0 == ::localtime_s(&timeInfo, &nsecs)) {
+    if (0 == ::localtime_r(&nsecs, &timeInfo)) {
 //        sprintf(timeString, "%4d-%02d-%02d %02d:%02d:%02d.%03d",
 //              timeInfo.tm_year + 1900, timeInfo.tm_mon + 1, timeInfo.tm_mday,
 //              timeInfo.tm_hour, timeInfo.tm_min, timeInfo.tm_sec, (nMilliSecs % nsecs));
 
-        sprintf(timeString, "%02d:%02d:%02d.%03d",
+        sprintf(timeString, "%02d:%02d:%02d.%03ld",
                timeInfo.tm_hour, timeInfo.tm_min, timeInfo.tm_sec, (nMilliSecs % nsecs));
     }
     return timeString;

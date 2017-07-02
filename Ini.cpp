@@ -69,6 +69,7 @@ typename Dictionary<Traits>::value_t Dictionary<Traits>::empty = typename Dictio
 typedef Dictionary<SectionTraits> INIBase;
 
 class INIFile : public INIBase {
+private:
   std::string filename;
 
   static void trim(std::string& to_trim) {
@@ -85,7 +86,8 @@ class INIFile : public INIBase {
   bool writeback;
   
   INIFile(const std::string& filename, bool writeback = true, bool exists = true):
-    filename(filename), writeback(writeback), INIBase(exists ? createBase(filename) : INIBase()) {}
+    INIBase(exists ? createBase(filename) : INIBase()),
+	filename(filename), writeback(writeback) {}
 
   static INIBase createBase(const std::string& filename) {
     // We construct with exists = false if we want to make a new INI file.
