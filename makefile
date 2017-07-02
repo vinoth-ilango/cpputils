@@ -2,9 +2,10 @@
 # target: dependencies
 # 	command
 # $@ - target
-# $
-CC = g++ -Wall
-CCFLAGs  = --std=c++11
+# $< - first dependency
+#
+CC = g++ 
+CCFLAGs  = -Wall --std=c++11
 INCLUDES = -I./
 
 PROGRAM = ./bin/test
